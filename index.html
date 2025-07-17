@@ -31,7 +31,7 @@ body {
   font-family: 'Poppins', sans-serif;
   background: #f0f8ff; /* azul pastel clarinho */
   margin: 0;
-  padding: 25px;
+  padding: 20px;
   color: #7a9cd1; /* azul pastel suave */
   line-height: 1.6;
 }
@@ -68,7 +68,7 @@ label {
   textarea,
   select {
     width: 100%;
-    padding: 12px 20px;
+    padding: 10px 20px;
     margin: 8px 0;
     box-sizing: border-box;
     border: 1.5px solid #a8bbff;
@@ -312,8 +312,22 @@ button.btn-print:disabled {
     <input type="email" id="emailFuncionario" required />
     <label>Área</label>
     <input type="text" />
-    <label>Cargo</label>
-    <input type="text" />
+    <label for="cargo">Cargo</label>
+<select id="cargo" name="cargo">
+    <option value="analista_importacao">Analista de Importação</option>
+    <option value="analista_exportacao">Analista de Exportação</option>
+    <option value="analista_financeiro">Analista Financeiro</option>
+    <option value="coordenador_importacao">Coordenador de Importação</option>
+    <option value="coordenador_exportacao">Coordenador de Exportação</option>
+    <option value="coordenador_financeiro">Coordenador Financeiro</option>
+    <option value="gerente_importacao">Gerente de Importação</option>
+    <option value="gerente_exportacao">Gerente de Exportação</option>
+    <option value="gerente_financeiro">Gerente Financeiro</option>
+    <option value="diretor_importacao">Diretor de Importação</option>
+    <option value="diretor_exportacao">Diretor de Exportação</option>
+    <option value="diretor_financeiro">Diretor Financeiro</option>
+</select>
+
     <label>Gestor Imediato</label>
     <input type="text" />
     <label>Data de Admissão</label>
@@ -351,16 +365,52 @@ button.btn-print:disabled {
 <!-- Motivos do Desligamento -->
 <div class="grupo">
   <section>
-    <h2>Quanto ao seu desligamento</h2>
-    <label><input type="radio" name="desligamento" /> Fui demitido e fui informado do motivo</label>
-    <textarea placeholder="Comentários..."></textarea>
-    <label><input type="radio" name="desligamento" /> Fui demitido e não fui informado do motivo</label>
-    <textarea placeholder="Comentários..."></textarea>
-    <label><input type="radio" name="desligamento" /> Solicitei minha demissão devido à proposta de outra empresa</label>
-    <textarea placeholder="Razão/Motivo...Se possível, mencionar área, segmento e empresa..."></textarea>
-    <label><input type="radio" name="desligamento" /> Solicitei minha demissão por outros motivos</label>
-    <textarea placeholder="Razão/Motivo..."></textarea>
-  </section>
+  <h2>Quanto ao seu desligamento</h2>
+
+  <label>
+    <input type="radio" name="desligamento" onclick="handleSelection(this, 0)" />
+    Fui demitido e fui informado do motivo
+  </label>
+  <textarea placeholder="Comentários..."></textarea>
+
+  <label>
+    <input type="radio" name="desligamento" onclick="handleSelection(this, 1)" />
+    Fui demitido e não fui informado do motivo
+  </label>
+  <textarea placeholder="Comentários..."></textarea>
+
+  <label>
+    <input type="radio" name="desligamento" onclick="handleSelection(this, 2)" />
+    Solicitei minha demissão devido à proposta de outra empresa
+  </label>
+  <textarea placeholder="Razão/Motivo...Se possível, mencionar área, segmento e empresa..."></textarea>
+
+  <label>
+    <input type="radio" name="desligamento" onclick="handleSelection(this, 3)" />
+    Solicitei minha demissão por outros motivos
+  </label>
+  <textarea placeholder="Razão/Motivo..."></textarea>
+</section>
+
+<script>
+  function handleSelection(selectedRadio, selectedIndex) {
+    const radios = document.querySelectorAll('input[type="radio"][name="desligamento"]');
+    const textareas = document.querySelectorAll('textarea');
+
+    radios.forEach((radio, index) => {
+      if (radio !== selectedRadio) {
+        radio.disabled = true;
+      }
+    });
+
+    textareas.forEach((textarea, index) => {
+      if (index !== selectedIndex) {
+        textarea.disabled = true;
+      }
+    });
+  }
+</script>
+
 </div>
 
 <!-- Avaliação de Sua Área - Equipe -->
@@ -433,6 +483,7 @@ button.btn-print:disabled {
 
 <div class="grupo">
   <section>
+  <section>
     <h3>Comunicação</h3>
     <label>Com relação à comunicação interna da empresa?</label>
     <div class="rating-group">
@@ -462,9 +513,10 @@ button.btn-print:disabled {
 </div>
       <p>
   <label style="color: black; font-weight: bold;">
-    <input type="checkbox" /> Opto por não realizar a entrevista de desligamento
+    <input type="checkbox" id="optout" /> Opto por não realizar a entrevista de desligamento
   </label>
 </p>
+
 
       <div class="assinatura">
         <div class="assinatura">
@@ -491,28 +543,34 @@ button.btn-print:disabled {
 
 <script>
   // Inicializa assinatura
-  function initPad(canvasId, clearId, saveId) {
-    const canvas = document.getElementById(canvasId);
-    if (!canvas) return;
-    const pad = new SignaturePad(canvas, {
-      penColor: '#4a90e2',
-      minWidth: 1.5,
-      maxWidth: 3,
-      velocityFilterWeight: 0.7,
-    });
-    document.getElementById(clearId).onclick = () => {
-      pad.clear();
-      pad.on();
-    };
-    document.getElementById(saveId).onclick = () => {
-      if (pad.isEmpty()) return alert('Assine primeiro!');
-      pad.off();
-      alert('Assinatura salva!');
-    };
-  }
-  initPad('sig1', 'clear1', 'save1');
-  initPad('sig2', 'clear2', 'save2');
-  initPad('sig3', 'clear3', 'save3');
+function initPad(canvasId, clearId, saveId) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  const pad = new SignaturePad(canvas, {
+    penColor: '#4a90e2',
+    minWidth: 0.8,
+    maxWidth: 2.5,
+    velocityFilterWeight: 0.4,
+    throttle: 10,
+    minDistance: 1.5
+  });
+
+  document.getElementById(clearId).onclick = () => {
+    pad.clear();
+    pad.on();
+  };
+
+  document.getElementById(saveId).onclick = () => {
+    if (pad.isEmpty()) return alert('Assine primeiro!');
+    pad.off();
+    alert('Assinatura salva!');
+  };
+}
+
+initPad('sig1', 'clear1', 'save1');
+initPad('sig2', 'clear2', 'save2');
+initPad('sig3', 'clear3', 'save3');
+
 
   // Botão enviar habilitado somente se checkbox estiver marcado
   const consentCheckbox = document.getElementById("consentCheckbox");
@@ -586,6 +644,42 @@ button.btn-print:disabled {
       alert("Erro ao enviar, tente novamente. Se o erro persisitir contate o RH");
     }
   }
+  
+  
+</script>
+<script>
+  const checkboxNaoRealizar = document.getElementById("optout");
+
+  checkboxNaoRealizar?.addEventListener('change', () => {
+    const desabilitar = checkboxNaoRealizar.checked;
+
+    const gruposPermitidos = [
+      'Dados Profissionais',
+      'Data de Admissão',
+      'Data de Saída',
+      'Assinatura do Entrevistado',
+      'Declaro que as informações fornecidas acima são verdadeiras.'
+    ];
+
+    document.querySelectorAll('input, textarea, select').forEach(el => {
+      const labelText = el.closest('section')?.querySelector('h2,h3')?.textContent || '';
+      const labelContainer = el.closest('label')?.textContent || '';
+
+      const permitido =
+        gruposPermitidos.some(texto => labelText.includes(texto) || labelContainer.includes(texto)) ||
+        el.id === 'nomeFuncionario' || el.id === 'emailFuncionario' ||
+        el.id === 'admissao' || el.id === 'saida' ||
+        el.id === 'consentCheckbox';
+		
+		
+
+      if (!permitido && el.type !== 'checkbox' && el.type !== 'submit') {
+        el.disabled = desabilitar;
+      }
+    });
+
+    
+  });
 </script>
 
 
