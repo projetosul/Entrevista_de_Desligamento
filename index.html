@@ -508,7 +508,7 @@ button.btn-print:disabled {
     <label>Você gostaria de comentar algo que não foi perguntado?</label>
     <textarea></textarea>
     <label>Data</label>
-    <input type="date" />
+    <input type="date" id="dates"/>
   </section>
 </div>
       <p>
@@ -668,7 +668,7 @@ initPad('sig3', 'clear3', 'save3');
       const permitido =
         gruposPermitidos.some(texto => labelText.includes(texto) || labelContainer.includes(texto)) ||
         el.id === 'nomeFuncionario' || el.id === 'emailFuncionario' ||
-        el.id === 'admissao' || el.id === 'saida' ||
+        el.id === 'admissao' || el.id === 'saida' || el.id === 'dates' ||
         el.id === 'consentCheckbox';
 		
 		
