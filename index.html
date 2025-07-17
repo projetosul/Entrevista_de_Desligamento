@@ -667,6 +667,7 @@ initPad('sig3', 'clear3', 'save3');
 
       const permitido =
         gruposPermitidos.some(texto => labelText.includes(texto) || labelContainer.includes(texto)) ||
+		labelContainer.includes("Data") ||
         el.id === 'nomeFuncionario' || el.id === 'emailFuncionario' ||
         el.id === 'admissao' || el.id === 'saida' || el.id === 'dates' ||
         el.id === 'consentCheckbox';
