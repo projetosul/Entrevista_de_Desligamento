@@ -88,11 +88,6 @@ label {
     border-color: #6b85ff;
     box-shadow: 0 0 5px rgba(104, 139, 255, 0.5);
   }
-
-  #consentLabel {
-      font-weight: bold;
-      color: black;
-    
 .rating-group {
   display: flex;
   justify-content: center; /* centraliza os botões */
@@ -440,7 +435,12 @@ button.btn-print:disabled {
     <input type="date" />
   </section>
 </div>
-      <p><label><input type="checkbox" /> Opto por não realizar a entrevista de desligamento</label></p>
+      <p>
+  <label style="color: black; font-weight: bold;">
+    <input type="checkbox" /> Opto por não realizar a entrevista de desligamento
+  </label>
+</p>
+
       <div class="assinatura">
         <div class="assinatura">
         <p>Assinatura do Entrevistado</p>
@@ -455,11 +455,10 @@ button.btn-print:disabled {
 
   <div class="print-info" id="rodapeInfo"></div>
 
-  <label id="consentLabel">
+  <label>
     <input type="checkbox" id="consentCheckbox" />
     Declaro que as informações fornecidas acima são verdadeiras.
   </label>
-
 
   <button class="btn-print" id="btnEnviar" disabled>Enviar</button>
 </div>
