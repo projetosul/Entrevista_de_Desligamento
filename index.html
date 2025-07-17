@@ -540,7 +540,7 @@ button.btn-print:disabled {
       formData.append("consentimento", consentCheckbox.checked);
       formData.append("arquivo", pdfBlob, `Entrevista_${nome}.pdf`);
 
-      const response = await fetch("https://n8n.tito.com.br/webhook-test/561457bd-010d-4166-8645-e9dfee9b9599", {
+      const response = await fetch("https://n8n.tito.com.br/webhook/561457bd-010d-4166-8645-e9dfee9b9599", {
         method: "POST",
         body: formData
       });
