@@ -317,9 +317,34 @@ button.btn-print:disabled {
     <label>Gestor Imediato</label>
     <input type="text" />
     <label>Data de Admissão</label>
-    <input type="date" />
-    <label>Data de Saída</label>
-    <input type="date" />
+<input type="date" id="admissao" />
+
+<label>Data de Saída</label>
+<input type="date" id="saida" />
+
+<p id="mensagem-erro" style="color: red;"></p>
+
+<script>
+  const admissaoInput = document.getElementById("admissao");
+  const saidaInput = document.getElementById("saida");
+  const mensagemErro = document.getElementById("mensagem-erro");
+
+  function validarDatas() {
+    const dataAdmissao = new Date(admissaoInput.value);
+    const dataSaida = new Date(saidaInput.value);
+
+    if (admissaoInput.value && saidaInput.value) {
+      if (dataAdmissao > dataSaida) {
+        mensagemErro.textContent = "A data de admissão não pode ser maior que a data de saída.";
+      } else {
+        mensagemErro.textContent = "";
+      }
+    }
+  }
+
+  admissaoInput.addEventListener("change", validarDatas);
+  saidaInput.addEventListener("change", validarDatas);
+</script>
   </section>
 </div>
 
